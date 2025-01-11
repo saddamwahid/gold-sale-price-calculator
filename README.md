@@ -1,1 +1,1 @@
-# jewelry-percentage-calculator
+# gold-sale-price-calculator

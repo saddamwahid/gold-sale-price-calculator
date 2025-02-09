@@ -9,7 +9,7 @@ document.getElementById('calculateBtn').addEventListener('click', () => {
 
     const gramPerVori = 11.664;
     const anaPerVori = 16;
-    const rotiPerAna = 6;
+    const rotiPerAna = 4;
 
     // Calculate 1 Vori price
     const voriPrice = (pricePerGram * gramPerVori).toFixed(2);

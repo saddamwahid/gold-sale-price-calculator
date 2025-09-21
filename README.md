@@ -1,1 +1,0 @@
-# gold-sale-price-calculator

@@ -15,37 +15,43 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
   const rotiPerAna = 6;
   const pointPerRoti = 10;
 
-  // Conversion in grams
-  const gramPerAna = gramPerVori / anaPerVori;
-  const gramPerRoti = gramPerAna / rotiPerAna;
-  const gramPerPoint = gramPerRoti / pointPerRoti;
+  // Derived conversions
+  const gramPerAna = gramPerVori / anaPerVori; // 0.729g
+  const gramPerRoti = gramPerAna / rotiPerAna; // 0.1215g
+  const gramPerPoint = gramPerRoti / pointPerRoti; // 0.01215g
 
-  // Breakdown calculation
-  let totalVori = Math.floor(goldWeight / gramPerVori);
-  let remainingGrams = goldWeight % gramPerVori;
+  let remaining = goldWeight;
 
-  let totalAna = Math.floor(remainingGrams / gramPerAna);
-  remainingGrams = remainingGrams % gramPerAna;
+  // Breakdown without rounding error
+  const totalVori = Math.floor(remaining / gramPerVori);
+  remaining -= totalVori * gramPerVori;
 
-  let totalRoti = Math.floor(remainingGrams / gramPerRoti);
-  remainingGrams = remainingGrams % gramPerRoti;
+  const totalAna = Math.floor(remaining / gramPerAna);
+  remaining -= totalAna * gramPerAna;
 
-  let totalPoint = Math.round(remainingGrams / gramPerPoint);
+  const totalRoti = Math.floor(remaining / gramPerRoti);
+  remaining -= totalRoti * gramPerRoti;
 
-  // Carry system (Point → Roti → Ana → Vori)
-  if (totalPoint >= pointPerRoti) {
-    totalRoti += Math.floor(totalPoint / pointPerRoti);
-    totalPoint = totalPoint % pointPerRoti;
+  const totalPoint = Math.round(remaining / gramPerPoint);
+  remaining -= totalPoint * gramPerPoint;
+
+  // Carry system adjustment
+  let adjVori = totalVori;
+  let adjAna = totalAna;
+  let adjRoti = totalRoti;
+  let adjPoint = totalPoint;
+
+  if (adjPoint >= pointPerRoti) {
+    adjRoti += Math.floor(adjPoint / pointPerRoti);
+    adjPoint = adjPoint % pointPerRoti;
   }
-
-  if (totalRoti >= rotiPerAna) {
-    totalAna += Math.floor(totalRoti / rotiPerAna);
-    totalRoti = totalRoti % rotiPerAna;
+  if (adjRoti >= rotiPerAna) {
+    adjAna += Math.floor(adjRoti / rotiPerAna);
+    adjRoti = adjRoti % rotiPerAna;
   }
-
-  if (totalAna >= anaPerVori) {
-    totalVori += Math.floor(totalAna / anaPerVori);
-    totalAna = totalAna % anaPerVori;
+  if (adjAna >= anaPerVori) {
+    adjVori += Math.floor(adjAna / anaPerVori);
+    adjAna = adjAna % anaPerVori;
   }
 
   // Price calculations
@@ -65,7 +71,7 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
   resultBox.innerHTML = `       
         <h3>Gold Details</h3>
         <p><span class="bold">Per Vori Gold Price:</span> Tk ${voriPrice}</p> 
-        <p><span class="bold">Gold Quantity:</span> ${totalVori} Vori ${totalAna} Ana ${totalRoti} Roti ${totalPoint} Point</p>
+        <p><span class="bold">Gold Quantity:</span> ${adjVori} Vori ${adjAna} Ana ${adjRoti} Roti ${adjPoint} Point</p>
         <p><span class="bold">Total Price:</span> Tk ${totalPrice}</p>
         <h3>Deduction</h3>
         ${deductions}

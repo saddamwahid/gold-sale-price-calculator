@@ -95,10 +95,10 @@ main {
   box-shadow: 0 0 5px rgba(234, 179, 8, 0.5);
 }
 
-/* Calculator Button - transparent initially */
+/* Calculator Button */
 .calculator-box button {
   margin-top: 15px;
-  width: auto; /* auto width, not full */
+  width: auto;
   padding: 10px 25px;
   background-color: transparent;
   color: #eab308;
@@ -127,20 +127,18 @@ main {
   border-radius: 12px;
   padding: 25px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.5s ease,
-    max-height 0.5s ease;
+  transition: opacity 0.5s ease, max-height 0.5s ease;
   opacity: 0;
   max-height: 0;
   overflow: hidden;
 }
 
-/* Show result box */
 .result-box.show {
   opacity: 1;
   max-height: 2000px;
 }
 
-/* Result Box Titles */
+/* Titles */
 .result-box h3 {
   background-color: #eab308;
   color: #fff;
@@ -152,7 +150,6 @@ main {
   font-weight: 600;
 }
 
-/* Result Paragraphs */
 .result-box p {
   font-size: 1rem;
   margin: 10px 0;

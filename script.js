@@ -19,35 +19,20 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
   const gramPerRoti = gramPerAna / rotiPerAna;
   const gramPerPoint = gramPerRoti / pointPerRoti;
 
-  // Calculate Vori → Ana → Roti → Point
-  let totalVori = Math.floor(goldWeight / gramPerVori);
-  let remainingGrams = goldWeight % gramPerVori;
+  let remaining = goldWeight;
 
-  let totalAna = Math.floor(remainingGrams / gramPerAna);
-  remainingGrams = remainingGrams % gramPerAna;
+  const totalVori = Math.floor(remaining / gramPerVori);
+  remaining -= totalVori * gramPerVori;
 
-  let totalRoti = Math.floor(remainingGrams / gramPerRoti);
-  remainingGrams = remainingGrams % gramPerRoti;
+  const totalAna = Math.floor(remaining / gramPerAna);
+  remaining -= totalAna * gramPerAna;
 
-  let totalPoint = Math.round(remainingGrams / gramPerPoint);
+  const totalRoti = Math.floor(remaining / gramPerRoti);
+  remaining -= totalRoti * gramPerRoti;
 
-  // Carry system
-  if (totalPoint >= pointPerRoti) {
-    totalRoti += Math.floor(totalPoint / pointPerRoti);
-    totalPoint = totalPoint % pointPerRoti;
-  }
+  const totalPoint = Math.round(remaining / gramPerPoint);
 
-  if (totalRoti >= rotiPerAna) {
-    totalAna += Math.floor(totalRoti / rotiPerAna);
-    totalRoti = totalRoti % rotiPerAna;
-  }
-
-  if (totalAna >= anaPerVori) {
-    totalVori += Math.floor(totalAna / anaPerVori);
-    totalAna = totalAna % anaPerVori;
-  }
-
-  // Price calculation
+  // Price calculations
   const voriPrice = (pricePerGram * gramPerVori).toFixed(2);
   const totalPrice = (pricePerGram * goldWeight).toFixed(2);
 
@@ -55,25 +40,25 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
   let deductionsHTML = "";
   for (let i = 20; i >= 1; i--) {
     const deductionAmount = ((i / 100) * totalPrice).toFixed(2);
-    const remainingPrice = (totalPrice - deductionAmount).toFixed(2);
-    deductionsHTML += `<p><span class="bold">${i}% Deduction:</span> Tk ${deductionAmount} | Remaining: Tk ${remainingPrice}</p>`;
+    const priceAfterDeduction = (totalPrice - deductionAmount).toFixed(2);
+    deductionsHTML += `<p><span class="bold">${i}% Deduction:</span> Tk ${deductionAmount} | Remaining: Tk ${priceAfterDeduction}</p>`;
   }
 
-  // Display Gold Details
-  const goldDetailsBox = document.getElementById("goldDetails");
-  goldDetailsBox.innerHTML = `
-        <h3>Gold Details</h3>
-        <p><span class="bold">Per Vori Price:</span> Tk ${voriPrice}</p>
-        <p><span class="bold">Gold Quantity:</span> ${totalVori} Vori ${totalAna} Ana ${totalRoti} Roti ${totalPoint} Point</p>
-        <p><span class="bold">Total Price:</span> Tk ${totalPrice}</p>
-    `;
-  goldDetailsBox.classList.add("show");
+  // Show Gold Details
+  const goldDetails = document.getElementById("goldDetails");
+  goldDetails.innerHTML = `
+      <h3>Gold Details</h3>
+      <p><span class="bold">Per Vori Gold Price:</span> Tk ${voriPrice}</p>
+      <p><span class="bold">Gold Quantity:</span> ${totalVori} Vori ${totalAna} Ana ${totalRoti} Roti ${totalPoint} Point</p>
+      <p><span class="bold">Total Price:</span> Tk ${totalPrice}</p>
+  `;
+  goldDetails.classList.add("show");
 
-  // Display Deduction Box
+  // Show Deduction
   const deductionBox = document.getElementById("deductionBox");
   deductionBox.innerHTML = `<h3>Deduction</h3>${deductionsHTML}`;
   deductionBox.classList.add("show");
 });
 
-// Footer current year
+// Update footer year
 document.getElementById("currentYear").textContent = new Date().getFullYear();

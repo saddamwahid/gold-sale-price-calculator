@@ -15,26 +15,32 @@ body {
   text-align: center;
 }
 
-/* Header */
 header {
   background-color: #eab308;
-  color: #ffffff;
+  color: #fff;
   padding: 25px 20px;
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
 header .logo {
   font-size: 2rem;
   font-weight: 700;
 }
 
-/* Main Container */
 main {
   flex-grow: 1;
   display: flex;
   justify-content: center;
   padding: 40px 20px 80px 20px;
+}
+/* Input & Button Focus */
+input:focus,
+textarea:focus,
+button:focus {
+  outline: none; /* ব্রাউজারের default black outline remove */
+  border: 2px solid #eab308; /* subtle gold border (input এর মতো) */
+  background-color: #fff; /* background white থাকবে */
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1); /* হালকা shadow */
 }
 
 .calculator-container {
@@ -47,7 +53,7 @@ main {
 
 /* Calculator Box */
 .calculator-box {
-  background-color: #ffffff;
+  background-color: #fff;
   padding: 30px 25px;
   border-radius: 12px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
@@ -66,28 +72,32 @@ main {
   padding: 10px 15px;
   border-radius: 6px;
   margin-bottom: 20px;
-  font-size: 1.5rem;
-  font-weight: 600;
 }
 
-/* Labels */
 .calculator-box label {
   display: block;
   text-align: left;
+  margin: 10px 0 5px;
   font-weight: 500;
-  margin: 12px 0 6px;
-  font-size: 1rem;
 }
 
-/* Inputs */
+.result-box h3.box-header {
+  background-color: #eab308;
+  color: #fff;
+  display: inline-block;
+  padding: 10px 15px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
 .calculator-box input {
   width: 100%;
-  padding: 14px 12px;
+  padding: 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
+  margin-bottom: 15px;
   outline: none;
   font-size: 1rem;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .calculator-box input:focus {
@@ -95,42 +105,36 @@ main {
   box-shadow: 0 0 5px rgba(234, 179, 8, 0.5);
 }
 
-/* Calculator Button */
 .calculator-box button {
   margin-top: 15px;
-  width: auto;
   padding: 10px 25px;
-  background-color: transparent;
-  color: #eab308;
-  font-size: 1.1rem;
-  font-weight: 600;
   border: 2px solid #eab308;
   border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+  background-color: transparent;
+  color: #eab308;
+  transition: transform 0.2s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
-.calculator-box button:hover {
+.calculator-box button:focus {
   background-color: #eab308;
   color: #fff;
   transform: scale(1.05);
 }
 
-.calculator-box button:focus {
-  outline: none;
-  box-shadow: 0 0 5px #333;
-}
-
 /* Result Boxes */
 .result-box {
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 12px;
   padding: 25px;
   box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: opacity 0.5s ease, max-height 0.5s ease;
+  transition: opacity 0.5s ease, max-height 0.5s ease, transform 0.3s ease,
+    box-shadow 0.3s ease;
   opacity: 0;
   max-height: 0;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .result-box.show {
@@ -138,24 +142,16 @@ main {
   max-height: 2000px;
 }
 
-/* Titles */
-.result-box h3 {
-  background-color: #eab308;
-  color: #fff;
-  display: inline-block;
-  padding: 10px 15px;
-  border-radius: 6px;
-  margin-bottom: 15px;
-  font-size: 1.3rem;
-  font-weight: 600;
+.result-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
 .result-box p {
   font-size: 1rem;
   margin: 10px 0;
 }
-
-.bold {
+.result-box strong {
   font-weight: 600;
 }
 
@@ -172,6 +168,47 @@ footer {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 1000;
+}
+
+/* Sticky Contact Icon */
+.contact-icon {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #eab308; /* circular background */
+  color: #fff; /* icon color white */
+  font-size: 24px;
+  padding: 15px 18px;
+  border-radius: 50%; /* circular */
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  z-index: 1000;
+  text-decoration: none;
+  border-color: none; /* black border/remove */
+}
+
+.contact-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
 /* Responsive */
 @media (max-width: 768px) {
   .calculator-container {
@@ -182,8 +219,7 @@ footer {
   .result-box {
     padding: 20px;
   }
-  .calculator-box h2,
-  .result-box h3 {
+  .calculator-box h2 {
     font-size: 1.3rem;
     padding: 8px 12px;
   }
@@ -199,8 +235,7 @@ footer {
   header .logo {
     font-size: 1.5rem;
   }
-  .calculator-box h2,
-  .result-box h3 {
+  .calculator-box h2 {
     font-size: 1.1rem;
   }
   .calculator-box label,

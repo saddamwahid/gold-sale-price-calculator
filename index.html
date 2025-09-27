@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gold Sale Price Calculator</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
+
     <header>
         <h1 class="logo">Gold Sale Price Calculator</h1>
     </header>
@@ -22,12 +23,12 @@
                 <h2>Calculate Selling Gold Price</h2>
                 <form id="goldCalculatorForm">
                     <label for="pricePerGram">Gold Price (Per Gram in Tk)</label>
-                    <input type="number" id="pricePerGram" placeholder="Enter price per gram" required>
+                    <input type="number" id="pricePerGram" placeholder="Enter price per gram" required step="any">
 
                     <label for="goldWeight">Gold Quantity (in Gram)</label>
-                    <input type="number" id="goldWeight" placeholder="Enter gold weight" required>
+                    <input type="number" id="goldWeight" placeholder="Enter gold weight" required step="any">
 
-                    <button type="button" id="calculateBtn">Calculate</button>
+                    <button type="submit" id="calculateBtn">Calculate</button>
                 </form>
             </div>
 
@@ -44,7 +45,13 @@
         <p>© <span id="currentYear"></span> Md Saddam Wahid</p>
     </footer>
 
-    <script src="script.js"></script>
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Sticky Contact Icon -->
+    <a href="contact.html" class="contact-icon">📮</a>
+
+    <script src="js/script.js"></script>
 </body>
 
 </html>

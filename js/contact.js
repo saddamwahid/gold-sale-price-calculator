@@ -1,16 +1,19 @@
 // Initialize EmailJS
 (function () {
-  emailjs.init("ciDzrXIXltnwhSv56"); // তোমার Public Key
+  emailjs.init("ciDzrXIXltnwhSv56"); // আপনার Public Key
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("contact-form");
-  const successMsg = document.querySelector(".success");
-  const errorMsg = document.querySelector(".error");
+  const toast = document.getElementById("toast");
 
-  // Initially hide messages
-  successMsg.style.display = "none";
-  errorMsg.style.display = "none";
+  function showToast(message) {
+    toast.textContent = message;
+    toast.style.opacity = "1";
+    setTimeout(() => {
+      toast.style.opacity = "0";
+    }, 1500);
+  }
 
   form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -21,18 +24,18 @@ document.addEventListener("DOMContentLoaded", function () {
       message: document.getElementById("message").value,
     };
 
-    // Send email to YOU only
     emailjs
       .send("service_zptzpok", "template_zrgvjcc", formData)
       .then(function () {
-        successMsg.style.display = "block";
-        errorMsg.style.display = "none";
+        showToast("Message Sent Successfully!");
         form.reset();
       })
       .catch(function (error) {
         console.error("Error:", error);
-        successMsg.style.display = "none";
-        errorMsg.style.display = "block";
+        showToast("Failed to Send Message!");
       });
   });
+
+  // Footer year set
+  document.getElementById("currentYear").textContent = new Date().getFullYear();
 });

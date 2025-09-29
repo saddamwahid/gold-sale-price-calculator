@@ -201,9 +201,16 @@ footer {
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   z-index: 1000;
   text-decoration: none;
-  border-color: none; /* black border/remove */
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
+.contact-icon i {
+  font-size: 20px;
+}
+
+/* Hover Effect */
 .contact-icon:hover {
   transform: scale(1.1);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
